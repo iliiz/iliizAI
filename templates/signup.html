@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Sign Up Card</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #000000;
+    }
+    .perspective-container {
+      perspective: 1000px;
+    }
+    .preserve-3d {
+      transform-style: preserve-3d;
+      transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+    }
+  </style>
+</head>
+<body class="w-full min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
+
+  <div class="perspective-container">
+    
+    <div id="3d-card" class="preserve-3d relative w-[380px] min-h-[540px] rounded-[32px] overflow-hidden p-8 flex flex-col justify-between"
+         style="background-color: #0e131f; box-shadow: 0 -10px 100px 10px rgba(78, 99, 255, 0.15), 0 0 10px 0 rgba(0, 0, 0, 0.5);">
+      
+      <div class="absolute inset-0 z-0" style="background: linear-gradient(180deg, #000000 0%, #000000 70%);"></div>
+
+      <div id="glass-overlay" class="absolute inset-0 z-30 pointer-events-none opacity-50 transition-opacity duration-300 rounded-[32px]"
+           style="background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 80%, rgba(255,255,255,0.05) 100%); backdrop-filter: blur(2px);"></div>
+
+      <div class="absolute inset-0 opacity-25 mix-blend-overlay z-10 pointer-events-none"
+           style="background-image: url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E&quot;);"></div>
+
+      <div class="absolute inset-0 opacity-10 mix-blend-soft-light z-11 pointer-events-none"
+           style="background-image: url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='smudge'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.01' numOctaves='3' seed='5' stitchTiles='stitch'/%3E%3CfeGaussianBlur stdDeviation='10'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23smudge)'/%3E%3C/svg%3E&quot;); backdrop-filter: blur(1px);"></div>
+
+      <div id="glow-bg" class="absolute bottom-0 left-0 right-0 h-2/3 z-20 transition-opacity duration-300 opacity-80"
+           style="background: radial-gradient(ellipse at bottom right, rgba(172, 92, 255, 0.6) -10%, rgba(79, 70, 229, 0) 70%), radial-gradient(ellipse at bottom left, rgba(56, 189, 248, 0.6) -10%, rgba(79, 70, 229, 0) 70%), radial-gradient(circle at bottom center, rgba(161, 58, 229, 0.6) -20%, rgba(79, 70, 229, 0) 60%); filter: blur(40px);"></div>
+
+      <div id="bottom-glow" class="absolute bottom-0 left-0 right-0 h-[2px] z-25 transition-all duration-300 opacity-90"
+           style="background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.05) 100%); box-shadow: 0 0 15px 3px rgba(172, 92, 255, 0.8), 0 0 25px 5px rgba(138, 58, 185, 0.6);"></div>
+      <div class="absolute bottom-0 left-0 h-1/4 w-[1px] z-25" style="background: linear-gradient(to top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);"></div>
+      <div class="absolute bottom-0 right-0 h-1/4 w-[1px] z-25" style="background: linear-gradient(to top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);"></div>
+
+      <div class="relative z-40 w-full h-full flex flex-col justify-between" id="card-content">
+        
+        <div>
+          <div id="icon-wrapper" class="w-12 h-12 rounded-full flex items-center justify-center mb-5 transition-all duration-300"
+               style="background: linear-gradient(225deg, #171c2c 0%, #121624 100%); box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.25), inset 1px 1px 3px rgba(255, 255, 255, 0.12);">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 0L9.4 5.4L14.8 5.4L10.6 8.8L12 14.2L8 10.8L4 14.2L5.4 8.8L1.2 5.4L6.6 5.4L8 0Z" fill="white"/>
+            </svg>
+          </div>
+
+          <h3 id="form-title" class="text-2xl font-semibold text-white tracking-tight mb-1">Create an account</h3>
+          <p id="form-desc" class="text-xs text-gray-400 font-light mb-6">Let's get started with your premium space.</p>
+        </div>
+
+        <form id="signup-form" class="flex flex-col gap-4 my-auto">
+          <div class="relative">
+            <input type="text" required placeholder="Username" name="username"
+                   class="w-full h-11 bg-white/5 border border-white/10 rounded-xl px-4 text-sm text-white placeholder-gray-500 outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all">
+          </div>
+
+          <div class="relative">
+            <input type="email" required placeholder="Email Address" name="email"
+                   class="w-full h-11 bg-white/5 border border-white/10 rounded-xl px-4 text-sm text-white placeholder-gray-500 outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all">
+          </div>
+
+          <div class="relative">
+            <input type="password" required placeholder="Password" name="password"
+                   class="w-full h-11 bg-white/5 border border-white/10 rounded-xl px-4 text-sm text-white placeholder-gray-500 outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all">
+          </div>
+
+          <button type="submit" 
+                  class="w-full h-11 bg-white text-black font-medium text-sm rounded-xl hover:bg-gray-200 active:scale-[0.98] transition-all mt-2 shadow-lg flex items-center justify-center gap-2">
+            Sign Up
+            <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 8H15M15 8L8 1M15 8L8 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+
+        <form id="verify-form" class="hidden flex flex-col gap-4 my-auto">
+          <div class="relative">
+            <input type="text" required placeholder="Enter 4-digit OTP" name="otp" maxlength="6"
+                   class="w-full h-11 bg-white/5 border border-white/10 rounded-xl px-4 text-sm text-white tracking-widest text-center placeholder-gray-500 outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all">
+          </div>
+
+          <button type="submit" 
+                  class="w-full h-11 bg-white text-black font-medium text-sm rounded-xl hover:bg-gray-200 active:scale-[0.98] transition-all mt-2 shadow-lg flex items-center justify-center gap-2">
+            Verify & Complete
+            <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 8H15M15 8L8 1M15 8L8 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+
+        <div class="text-center mt-5">
+          <p class="text-xs text-gray-500">
+            Already have an account? 
+            <a href="/login" class="text-white hover:underline ml-1 font-medium">Log in</a>
+          </p>
+        </div>
+        
+        <div class="text-center mt-2 min-h-[16px]">
+          <p class="text-xs text-red-400 font-medium" id="error"></p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const card = document.getElementById("3d-card");
+  const glass = document.getElementById("glass-overlay");
+  const glowBg = document.getElementById("glow-bg");
+  const bottomGlow = document.getElementById("bottom-glow");
+  const iconWrapper = document.getElementById("icon-wrapper");
+  
+  const formTitle = document.getElementById("form-title");
+  const formDesc = document.getElementById("form-desc");
+  const signupForm = document.getElementById("signup-form");
+  const verifyForm = document.getElementById("verify-form");
+  const errorDisplay = document.getElementById("error");
+
+  let userEmail = "";
+
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    const rotateX = -(y / rect.height) * 8; 
+    const rotateY = (x / rect.width) * 8;
+
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+    card.style.boxShadow = "0 20px 120px 15px rgba(78, 99, 255, 0.28), 0 15px 30px 0 rgba(0, 0, 0, 0.6)";
+
+    glass.style.opacity = "0.7";
+    glass.style.transform = `translateX(${-rotateY * 0.8}px) translateY(${-rotateX * 0.8}px)`;
+
+    glowBg.style.opacity = "0.95";
+    bottomGlow.style.boxShadow = "0 0 25px 5px rgba(172, 92, 255, 1), 0 0 35px 8px rgba(138, 58, 185, 0.85), 0 0 45px 10px rgba(56, 189, 248, 0.7)";
+
+    iconWrapper.style.transform = `translateZ(20px) rotateX(${-rotateX * 0.4}deg) rotateY(${-rotateY * 0.4}deg)`;
+    iconWrapper.style.boxShadow = "0 12px 24px -2px rgba(0, 0, 0, 0.4), inset 2px 2px 5px rgba(255, 255, 255, 0.2)";
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "rotateX(0deg) rotateY(0deg) translateY(0px)";
+    card.style.boxShadow = "0 -10px 100px 10px rgba(78, 99, 255, 0.15), 0 0 10px 0 rgba(0, 0, 0, 0.5)";
+    
+    glass.style.opacity = "0.5";
+    glass.style.transform = "translateX(0px) translateY(0px)";
+    
+    glowBg.style.opacity = "0.8";
+    bottomGlow.style.boxShadow = "0 0 15px 3px rgba(172, 92, 255, 0.8), 0 0 25px 5px rgba(138, 58, 185, 0.6)";
+    
+    iconWrapper.style.transform = "translateZ(0px) rotateX(0deg) rotateY(0deg)";
+    iconWrapper.style.boxShadow = "0 6px 12px -2px rgba(0, 0, 0, 0.25), inset 1px 1px 3px rgba(255, 255, 255, 0.12)";
+  });
+
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorDisplay.innerText = "";
+    errorDisplay.className = "text-xs text-red-400 font-medium"; 
+
+    const formData = new FormData(signupForm);
+    userEmail = signupForm.elements.email.value.trim(); 
+
+    try {
+      const response = await fetch("/signup", {
+        method: "POST",
+        body: formData 
+      });
+
+      const result = await response.json();
+      
+      if (response.ok && result.success) {
+        signupForm.classList.add("hidden");
+        verifyForm.classList.remove("hidden");
+        
+        formTitle.innerText = "Verify OTP";
+        formDesc.innerText = `We sent a security code to ${userEmail}`;
+        
+        errorDisplay.className = "text-xs text-emerald-400 font-medium";
+        errorDisplay.innerText = "OTP sent successfully!";
+      } else {
+        errorDisplay.innerText = result.message || "Signup failed. Account might exist.";
+      }
+    } catch (err) {
+      console.error("Error during signup transport:", err);
+      errorDisplay.innerText = "Network error. Failed to send information.";
+    }
+  });
+
+  verifyForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorDisplay.className = "text-xs text-red-400 font-medium";
+    errorDisplay.innerText = "";
+
+    const otp = verifyForm.elements.otp.value.trim();
+    
+    const formData = new FormData();
+    formData.append("email", userEmail);
+    formData.append("otp", otp);
+
+    try {
+      const response = await fetch("/verify", { 
+        method: "POST", 
+        body: formData 
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        errorDisplay.className = "text-xs text-emerald-400 font-medium";
+        errorDisplay.innerText = result.message || "Success! Redirecting...";
+        
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1500);
+      } else {
+        errorDisplay.innerText = result.message || "Invalid verification code.";
+      }
+    } catch (err) {
+      console.error("Verification Error:", err);
+      errorDisplay.innerText = "Connection error. Failed to verify code.";
+    }
+  });
+});
+  </script>
+</body>
+</html>
