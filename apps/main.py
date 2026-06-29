@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
-from passlib.context import CryptContext
+import bcrypt 
 import uvicorn
 
 from .groq import iliiz
@@ -18,17 +18,18 @@ DATABASE_URL="sqlite:///./app.db"
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False, "timeout": 15}, echo=False)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 pending_users: dict = {}
 OTP_LIFETIME_MINUTES = 5
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    pwd_bytes = password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(pwd_bytes, salt)
+    return hashed.decode('utf-8')
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
-
+    return bcrypt.checkpw(plain.encode('utf-8'), hashed.encode('utf-8'))
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
